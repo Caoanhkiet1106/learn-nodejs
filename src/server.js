@@ -1,12 +1,16 @@
 import { engine } from 'express-handlebars';
 import express from 'express';
-
+import routes from './routes/index.js';
 
 const app = express()
 const port = 3000
 
-app.use(express.static('src/public'))
 
+app.use(express.static('src/public'))
+app.use(express.urlencoded({
+    extended:true
+}));
+app.use(express.json());
 
 // template enginee
 app.engine('hbs', engine());
@@ -14,14 +18,9 @@ app.set('view engine', 'hbs');
 app.set('views', 'src/resources/views');
 app.engine('.hbs', engine({extname: '.hbs'}));
 
-app.get('/', (req, res) => {
-  res.render('home');
-})
 
-app.get('/news', (req, res) => {
-  res.render('news');
-})
+routes(app)
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Server running at http://localhost:${port}`);
+});
