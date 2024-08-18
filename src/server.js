@@ -1,6 +1,8 @@
 import { engine } from 'express-handlebars';
 import express from 'express';
 import routes from './routes/index.js';
+import db from './config/db/index.js'
+db.connect()
 
 const app = express();
 const port = 3000;
